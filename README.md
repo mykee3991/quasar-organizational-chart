@@ -1,6 +1,6 @@
 # Quasar Organizational Chart App (quasar-organizational-chart)
 
-An organizational chart Vue component using QUasar framework and vue-orgchart
+An organizational chart Vue component using Quasar framework and vue-organization-chart (https://github.com/dabeng/vue-orgchart)
 
 ## Install the dependencies
 ```bash
@@ -20,3 +20,9 @@ quasar build
 
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+
+### Other Installed Packages
+```
+vue-panzoom
+axios
+```
