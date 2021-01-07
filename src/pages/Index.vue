@@ -1,17 +1,17 @@
 <template>
   <q-page>
     <q-drawer
-      v-model="state.leftDrawerOpen"
+      v-model="leftDrawerOpen"
       show-if-above
       bordered
       content-class="bg-grey-1"
     >
       <q-list
-        v-mutation="methods.handler1"
-        @dragenter="methods.onDragEnter"
-        @dragleave="methods.onDragLeave"
-        @dragover="methods.onDragOver"
-        @drop="methods.onDrop"
+        v-mutation="handler1"
+        @dragenter="onDragEnter"
+        @dragleave="onDragLeave"
+        @dragover="onDragOver"
+        @drop="onDrop"
         draggable="true"
         separator
         bordered
@@ -19,10 +19,10 @@
         <q-item-label header> People </q-item-label>
         <q-separator />
         <q-item
-          v-for="(person, index) in state.people"
+          v-for="(person, index) in people"
           :key="`person-${index}`"
           draggable="true"
-          @dragstart="methods.onDragStart"
+          @dragstart="onDragStart"
           :id="person.id"
           class="cursor-pointer"
         >
@@ -40,11 +40,11 @@
     <div class="row">
       <div class="col-12">
         <div
-          v-mutation="methods.handler2"
-          @dragenter="methods.onDragEnter"
-          @dragleave="methods.onDragLeave"
-          @dragover="methods.onDragOver"
-          @drop="methods.onDrop"
+          v-mutation="handler2"
+          @dragenter="onDragEnter"
+          @dragleave="onDragLeave"
+          @dragover="onDragOver"
+          @drop="onDrop"
           style="overflow: hidden"
         >
           <panZoom
@@ -54,8 +54,8 @@
           >
             <div class="panzoomable">
               <organization-chart
-                @node-click="methods.nodeClick"
-                :datasource="state.ds"
+                @node-click="nodeClick"
+                :datasource="ds"
               >
                 <template slot-scope="{ nodeData }">
                   <q-card
@@ -104,7 +104,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "@vue/composition-api";
+import { defineComponent, ref, reactive, toRefs } from "@vue/composition-api";
 import { State, Method } from "components/models";
 import OrganizationChart from "vue-organization-chart";
 import "vue-organization-chart/dist/orgchart.css";
@@ -112,10 +112,7 @@ import "vue-organization-chart/dist/orgchart.css";
 export default defineComponent({
   name: "PageIndex",
   components: { OrganizationChart },
-  setup(_, context: any) {
-    const root: any = context.root;
-    const refs: any = context.refs;
-
+  setup(_, {root, refs}: any) {
     const methods: Method = {};
     const data: State = {
       status1: [],
@@ -339,7 +336,7 @@ export default defineComponent({
     
 
     const state: State = reactive(data);
-    return { state, methods };
+    return { ...toRefs(state), ...methods };
   },
 });
 </script>
